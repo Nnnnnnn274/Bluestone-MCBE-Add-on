@@ -1,0 +1,83 @@
+{
+    "resource_pack_name":  "Bluestone RP",
+    "texture_name":  "atlas.terrain",
+    "padding":  8,
+    "num_mip_levels":  4,
+    "texture_data":  {
+                         "bluestone_dust_off":  {
+                                                    "textures":  "textures/blocks/bluestone_dust_off"
+                                                },
+                         "bluestone_dust_on":  {
+                                                   "textures":  "textures/blocks/bluestone_dust_on"
+                                               },
+                         "bluestone_connector_off":  {
+                                                         "textures":  "textures/blocks/bluestone_connector_off"
+                                                     },
+                         "bluestone_connector_on":  {
+                                                        "textures":  "textures/blocks/bluestone_connector_on"
+                                                    },
+                         "bluestone_torch_on":  {
+                                                    "textures":  "textures/blocks/bluestone_torch_on"
+                                                },
+                         "bluestone_lamp_off":  {
+                                                    "textures":  "textures/blocks/bluestone_lamp_off"
+                                                },
+                         "bluestone_lamp_on":  {
+                                                   "textures":  "textures/blocks/bluestone_lamp_on"
+                                               },
+                         "bluestone_gate_and_off":  {
+                                                        "textures":  "textures/blocks/bluestone_gate_and_off"
+                                                    },
+                         "bluestone_gate_and_on":  {
+                                                       "textures":  "textures/blocks/bluestone_gate_and_on"
+                                                   },
+                         "bluestone_gate_or_off":  {
+                                                       "textures":  "textures/blocks/bluestone_gate_or_off"
+                                                   },
+                         "bluestone_gate_or_on":  {
+                                                      "textures":  "textures/blocks/bluestone_gate_or_on"
+                                                  },
+                         "bluestone_gate_not_off":  {
+                                                        "textures":  "textures/blocks/bluestone_gate_not_off"
+                                                    },
+                         "bluestone_gate_not_on":  {
+                                                       "textures":  "textures/blocks/bluestone_gate_not_on"
+                                                   },
+                         "bluestone_gate_xor_off":  {
+                                                        "textures":  "textures/blocks/bluestone_gate_xor_off"
+                                                    },
+                         "bluestone_gate_xor_on":  {
+                                                       "textures":  "textures/blocks/bluestone_gate_xor_on"
+                                                   },
+                         "bluestone_gate_nand_off":  {
+                                                         "textures":  "textures/blocks/bluestone_gate_nand_off"
+                                                     },
+                         "bluestone_gate_nand_on":  {
+                                                        "textures":  "textures/blocks/bluestone_gate_nand_on"
+                                                    },
+                         "bluestone_gate_nor_off":  {
+                                                        "textures":  "textures/blocks/bluestone_gate_nor_off"
+                                                    },
+                         "bluestone_gate_nor_on":  {
+                                                       "textures":  "textures/blocks/bluestone_gate_nor_on"
+                                                   },
+                         "bluestone_gate_xnor_off":  {
+                                                         "textures":  "textures/blocks/bluestone_gate_xnor_off"
+                                                     },
+                         "bluestone_gate_xnor_on":  {
+                                                        "textures":  "textures/blocks/bluestone_gate_xnor_on"
+                                                    },
+                         "bluestone_diode_off":  {
+                                                     "textures":  "textures/blocks/bluestone_diode_off"
+                                                 },
+                         "bluestone_diode_on":  {
+                                                    "textures":  "textures/blocks/bluestone_diode_on"
+                                                },
+                         "bluestone_splitter_off":  {
+                                                        "textures":  "textures/blocks/bluestone_splitter_off"
+                                                    },
+                         "bluestone_splitter_on":  {
+                                                       "textures":  "textures/blocks/bluestone_splitter_on"
+                                                   }
+                     }
+}
