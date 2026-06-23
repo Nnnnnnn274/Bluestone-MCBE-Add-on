@@ -68,22 +68,76 @@ function canReadVanillaRedstone(block) {
 
 // Counts neighbors powered by the bluestone network only (no vanilla redstone).
 // Used by wire (dust), sinks, gates — keeping bluestone isolated from redstone.
+// Sources (torch/lantern) should only power wires, so ignore powered source neighbors
+// when evaluating non-wire targets.
 function bluestoneActiveNeighborCount(block, powerMap) {
   let active = 0;
+  const targetType = getNodeType(block);
   for (const neighbor of getNeighbors(block)) {
-    if (powerMap.get(blockKey(neighbor))) active++;
+    const nbKey = blockKey(neighbor);
+    if (!powerMap.get(nbKey)) continue;
+    const neighborType = getNodeType(neighbor);
+    // If neighbor is a source and the target is not a wire, it should not supply power.
+    if (neighborType === 'source' && targetType !== 'wire') continue;
+    active++;
   }
   return active;
 }
 
 // Counts neighbors powered by bluestone OR vanilla redstone.
 // Used only by the connector block, which is the explicit redstone bridge.
+// Similarly, powered sources should not count toward non-wire targets.
 function activeNeighborCount(block, powerMap) {
   let active = 0;
+  const targetType = getNodeType(block);
   for (const neighbor of getNeighbors(block)) {
-    if (powerMap.get(blockKey(neighbor)) || canReadVanillaRedstone(neighbor)) active++;
+    const nbKey = blockKey(neighbor);
+    const nbPowered = !!powerMap.get(nbKey);
+    const vanilla = canReadVanillaRedstone(neighbor);
+    if (nbPowered) {
+      const neighborType = getNodeType(neighbor);
+      if (!(neighborType === 'source' && targetType !== 'wire')) {
+        active++;
+        continue;
+      }
+    }
+    if (vanilla) active++;
   }
   return active;
+}
+
+// Compute which horizontal neighbors are connectable (used for wire visuals)
+function computeConnections(block) {
+  const conns = { north: false, south: false, east: false, west: false };
+  try {
+    const x = Math.floor(block.location.x);
+    const y = Math.floor(block.location.y);
+    const z = Math.floor(block.location.z);
+    const dim = block.dimension;
+    const checks = [
+      { dx: 0, dz: -1, dir: 'north' },
+      { dx: 0, dz: 1, dir: 'south' },
+      { dx: 1, dz: 0, dir: 'east' },
+      { dx: -1, dz: 0, dir: 'west' }
+    ];
+    for (const c of checks) {
+      const nb = dim.getBlock({ x: x + c.dx, y, z: z + c.dz });
+      if (!nb) continue;
+      if (getNodeType(nb)) conns[c.dir] = true;
+    }
+  } catch {}
+  return conns;
+}
+
+function setConnectionStates(block, conns) {
+  try {
+    let perm = block.permutation;
+    perm = perm.withState('bluestone:connect_north', !!conns.north);
+    perm = perm.withState('bluestone:connect_south', !!conns.south);
+    perm = perm.withState('bluestone:connect_east', !!conns.east);
+    perm = perm.withState('bluestone:connect_west', !!conns.west);
+    block.setPermutation(perm);
+  } catch {}
 }
 
 function evaluateNode(block, nodeType, previousPower) {
@@ -177,6 +231,12 @@ function simulate(nodes) {
   }
 
   for (const node of nodes.values()) {
+    try {
+      if (node.nodeType === 'wire') {
+        const conns = computeConnections(node.block);
+        setConnectionStates(node.block, conns);
+      }
+    } catch {}
     setPoweredState(node.block, power.get(blockKey(node.block)) === true);
   }
 }
