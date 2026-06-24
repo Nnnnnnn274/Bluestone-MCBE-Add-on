@@ -1,0 +1,14 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": { "identifier": "bluestone:compact_block" },
+    "tags": ["crafting_table"],
+    "ingredients": [
+      { "item": "bluestone:dust" },
+      { "item": "bluestone:dust" },
+      { "item": "bluestone:dust" },
+      { "item": "bluestone:dust" }
+    ],
+    "result": { "item": "bluestone:compact_block", "count": 1 }
+  }
+}

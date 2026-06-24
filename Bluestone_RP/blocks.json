@@ -55,5 +55,33 @@
     "bluestone:splitter":  {
                                "textures":  "bluestone_splitter_off",
                                "sound":  "stone"
-                           }
+                          },
+    "bluestone:compressor": {
+                              "textures": "bluestone_lamp_off",
+                              "sound": "stone"
+                          },
+    "bluestone:extractor": {
+                              "textures": "bluestone_lamp_off",
+                              "sound": "stone"
+                          },
+    "bluestone:assembler": {
+                              "textures": "bluestone_lamp_off",
+                              "sound": "stone"
+                          },
+    "bluestone:ore": {
+                              "textures": "bluestone_dust_off",
+                              "sound": "stone"
+                          },
+    "bluestone:conveyor": {
+                              "textures": "bluestone_splitter_off",
+                              "sound": "stone"
+                          },
+    "bluestone:vertical_hopper": {
+                              "textures": "bluestone_dust_off",
+                              "sound": "stone"
+                          },
+    "bluestone:compact_block": {
+                              "textures": "bluestone_lamp_off",
+                              "sound": "stone"
+                          }
 }

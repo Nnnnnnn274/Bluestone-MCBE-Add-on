@@ -1,0 +1,19 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:block": {
+    "description": {
+      "identifier": "bluestone:ore",
+      "menu_category": {
+        "category": "items",
+        "group": "itemGroup.name.buildingBlocks"
+      }
+    },
+    "components": {
+      "minecraft:display_name": "Bluestone Ore",
+      "minecraft:destructible_by_mining": { "seconds_to_destroy": 3.0 },
+      "minecraft:destructible_by_explosion": { "explosion_resistance": 15 },
+      "minecraft:map_color": "#7f7f7f",
+      "minecraft:material_instances": { "*": { "texture": "bluestone_dust_off", "render_method": "opaque" } }
+    }
+  }
+}

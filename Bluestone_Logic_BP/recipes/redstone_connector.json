@@ -1,0 +1,13 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": { "identifier": "bluestone:redstone_connector" },
+    "tags": ["crafting_table"],
+    "ingredients": [
+      { "item": "minecraft:redstone" },
+      { "item": "minecraft:stone" },
+      { "item": "minecraft:stick" }
+    ],
+    "result": { "item": "bluestone:redstone_connector", "count": 1 }
+  }
+}

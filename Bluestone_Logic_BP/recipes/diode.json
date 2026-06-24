@@ -1,0 +1,12 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": { "identifier": "bluestone:diode" },
+    "tags": ["crafting_table"],
+    "ingredients": [
+      { "item": "minecraft:redstone" },
+      { "item": "minecraft:stone" }
+    ],
+    "result": { "item": "bluestone:diode", "count": 1 }
+  }
+}

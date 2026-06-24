@@ -1,0 +1,13 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": { "identifier": "bluestone:assembler" },
+    "tags": ["crafting_table"],
+    "ingredients": [
+      { "item": "minecraft:gold_ingot" },
+      { "item": "minecraft:gold_ingot" },
+      { "item": "bluestone:dust" }
+    ],
+    "result": { "item": "bluestone:assembler", "count": 1 }
+  }
+}

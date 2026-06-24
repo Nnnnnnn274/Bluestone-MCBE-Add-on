@@ -1,0 +1,13 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": { "identifier": "bluestone:nor_gate" },
+    "tags": ["crafting_table"],
+    "ingredients": [
+      { "item": "minecraft:redstone" },
+      { "item": "minecraft:stone" },
+      { "item": "minecraft:gold_ingot" }
+    ],
+    "result": { "item": "bluestone:nor_gate", "count": 1 }
+  }
+}

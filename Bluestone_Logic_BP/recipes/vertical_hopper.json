@@ -1,0 +1,13 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": { "identifier": "bluestone:vertical_hopper" },
+    "tags": ["crafting_table"],
+    "ingredients": [
+      { "item": "minecraft:iron_ingot" },
+      { "item": "minecraft:chest" },
+      { "item": "bluestone:dust" }
+    ],
+    "result": { "item": "bluestone:vertical_hopper", "count": 1 }
+  }
+}

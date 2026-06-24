@@ -1,0 +1,13 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": { "identifier": "bluestone:xor_gate" },
+    "tags": ["crafting_table"],
+    "ingredients": [
+      { "item": "minecraft:redstone" },
+      { "item": "minecraft:stone" },
+      { "item": "minecraft:stick" }
+    ],
+    "result": { "item": "bluestone:xor_gate", "count": 1 }
+  }
+}

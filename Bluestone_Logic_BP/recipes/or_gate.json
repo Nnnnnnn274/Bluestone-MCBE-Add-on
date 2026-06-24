@@ -1,0 +1,13 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": { "identifier": "bluestone:or_gate" },
+    "tags": ["crafting_table"],
+    "ingredients": [
+      { "item": "minecraft:redstone" },
+      { "item": "minecraft:redstone" },
+      { "item": "minecraft:stick" }
+    ],
+    "result": { "item": "bluestone:or_gate", "count": 1 }
+  }
+}
