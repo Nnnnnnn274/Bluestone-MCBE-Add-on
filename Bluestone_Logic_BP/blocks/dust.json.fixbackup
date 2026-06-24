@@ -1,0 +1,191 @@
+﻿{
+  "format_version": "1.21.0",
+  "minecraft:block": {
+    "description": {
+      "identifier": "bluestone:dust",
+      "menu_category": {
+        "category": "items",
+        "group": "itemGroup.name.redstone"
+      },
+      "states": {
+        "bluestone:powered": [false, true],
+        "bluestone:connect_north": [false, true],
+        "bluestone:connect_south": [false, true],
+        "bluestone:connect_east": [false, true],
+        "bluestone:connect_west": [false, true]
+      }
+    },
+    "components": {
+      "minecraft:display_name": "Bluestone Dust",
+      "minecraft:destructible_by_mining": { "seconds_to_destroy": 0.35 },
+      "minecraft:destructible_by_explosion": { "explosion_resistance": 1 },
+      "minecraft:map_color": "#1d65ff",
+      "minecraft:light_dampening": 0,
+      "minecraft:geometry": "geometry.bluestone_dust_none",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "bluestone_connector_off",
+          "render_method": "alpha_test",
+          "face_dimming": false,
+          "ambient_occlusion": false
+        }
+      },
+      "minecraft:collision_box": false,
+      "minecraft:selection_box": { "origin": [-8, 0, -8], "size": [16, 1, 16] }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('bluestone:connect_north') == false && q.block_state('bluestone:connect_south') == false && q.block_state('bluestone:connect_east') == false && q.block_state('bluestone:connect_west') == false && q.block_state('bluestone:powered') == false",
+        "components": {
+          "minecraft:geometry": "geometry.bluestone_dust_none",
+          "minecraft:material_instances": { "*": { "texture": "bluestone_connector_off", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } }
+        }
+      },
+      {
+        "condition": "q.block_state('bluestone:connect_north') == false && q.block_state('bluestone:connect_south') == false && q.block_state('bluestone:connect_east') == false && q.block_state('bluestone:connect_west') == false && q.block_state('bluestone:powered') == true",
+        "components": {
+          "minecraft:geometry": "geometry.bluestone_dust_none",
+          "minecraft:material_instances": { "*": { "texture": "bluestone_connector_on", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } },
+          "minecraft:map_color": "#6ec8ff",
+          "minecraft:light_emission": 6
+        }
+      },
+
+      {
+        "condition": "q.block_state('bluestone:connect_north') == true && q.block_state('bluestone:connect_south') == false && q.block_state('bluestone:connect_east') == false && q.block_state('bluestone:connect_west') == false && q.block_state('bluestone:powered') == false",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_n", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_off", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } } }
+      },
+      {
+        "condition": "q.block_state('bluestone:connect_north') == true && q.block_state('bluestone:connect_south') == false && q.block_state('bluestone:connect_east') == false && q.block_state('bluestone:connect_west') == false && q.block_state('bluestone:powered') == true",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_n", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_on", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:map_color": "#6ec8ff", "minecraft:light_emission": 6 }
+      },
+
+      {
+        "condition": "q.block_state('bluestone:connect_south') == true && q.block_state('bluestone:connect_north') == false && q.block_state('bluestone:connect_east') == false && q.block_state('bluestone:connect_west') == false && q.block_state('bluestone:powered') == false",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_s", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_off", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } } }
+      },
+      {
+        "condition": "q.block_state('bluestone:connect_south') == true && q.block_state('bluestone:connect_north') == false && q.block_state('bluestone:connect_east') == false && q.block_state('bluestone:connect_west') == false && q.block_state('bluestone:powered') == true",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_s", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_on", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:map_color": "#6ec8ff", "minecraft:light_emission": 6 }
+      },
+
+      {
+        "condition": "q.block_state('bluestone:connect_east') == true && q.block_state('bluestone:connect_north') == false && q.block_state('bluestone:connect_south') == false && q.block_state('bluestone:connect_west') == false && q.block_state('bluestone:powered') == false",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_e", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_off", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } } }
+      },
+      {
+        "condition": "q.block_state('bluestone:connect_east') == true && q.block_state('bluestone:connect_north') == false && q.block_state('bluestone:connect_south') == false && q.block_state('bluestone:connect_west') == false && q.block_state('bluestone:powered') == true",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_e", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_on", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:map_color": "#6ec8ff", "minecraft:light_emission": 6 }
+      },
+
+      {
+        "condition": "q.block_state('bluestone:connect_west') == true && q.block_state('bluestone:connect_north') == false && q.block_state('bluestone:connect_south') == false && q.block_state('bluestone:connect_east') == false && q.block_state('bluestone:powered') == false",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_w", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_off", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } } }
+      },
+      {
+        "condition": "q.block_state('bluestone:connect_west') == true && q.block_state('bluestone:connect_north') == false && q.block_state('bluestone:connect_south') == false && q.block_state('bluestone:connect_east') == false && q.block_state('bluestone:powered') == true",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_w", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_on", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:map_color": "#6ec8ff", "minecraft:light_emission": 6 }
+      },
+
+      {
+        "condition": "q.block_state('bluestone:connect_north') == true && q.block_state('bluestone:connect_south') == true && q.block_state('bluestone:connect_east') == false && q.block_state('bluestone:connect_west') == false && q.block_state('bluestone:powered') == false",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_ns", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_off", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } } }
+      },
+      {
+        "condition": "q.block_state('bluestone:connect_north') == true && q.block_state('bluestone:connect_south') == true && q.block_state('bluestone:connect_east') == false && q.block_state('bluestone:connect_west') == false && q.block_state('bluestone:powered') == true",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_ns", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_on", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:map_color": "#6ec8ff", "minecraft:light_emission": 6 }
+      },
+
+      {
+        "condition": "q.block_state('bluestone:connect_east') == true && q.block_state('bluestone:connect_west') == true && q.block_state('bluestone:connect_north') == false && q.block_state('bluestone:connect_south') == false && q.block_state('bluestone:powered') == false",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_ew", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_off", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } } }
+      },
+      {
+        "condition": "q.block_state('bluestone:connect_east') == true && q.block_state('bluestone:connect_west') == true && q.block_state('bluestone:connect_north') == false && q.block_state('bluestone:connect_south') == false && q.block_state('bluestone:powered') == true",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_ew", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_on", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:map_color": "#6ec8ff", "minecraft:light_emission": 6 }
+      },
+
+      {
+        "condition": "q.block_state('bluestone:connect_north') == true && q.block_state('bluestone:connect_east') == true && q.block_state('bluestone:connect_south') == false && q.block_state('bluestone:connect_west') == false && q.block_state('bluestone:powered') == false",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_ne", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_off", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } } }
+      },
+      {
+        "condition": "q.block_state('bluestone:connect_north') == true && q.block_state('bluestone:connect_east') == true && q.block_state('bluestone:connect_south') == false && q.block_state('bluestone:connect_west') == false && q.block_state('bluestone:powered') == true",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_ne", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_on", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:map_color": "#6ec8ff", "minecraft:light_emission": 6 }
+      },
+
+      {
+        "condition": "q.block_state('bluestone:connect_north') == true && q.block_state('bluestone:connect_west') == true && q.block_state('bluestone:connect_south') == false && q.block_state('bluestone:connect_east') == false && q.block_state('bluestone:powered') == false",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_nw", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_off", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } } }
+      },
+      {
+        "condition": "q.block_state('bluestone:connect_north') == true && q.block_state('bluestone:connect_west') == true && q.block_state('bluestone:connect_south') == false && q.block_state('bluestone:connect_east') == false && q.block_state('bluestone:powered') == true",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_nw", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_on", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:map_color": "#6ec8ff", "minecraft:light_emission": 6 }
+      },
+
+      {
+        "condition": "q.block_state('bluestone:connect_south') == true && q.block_state('bluestone:connect_east') == true && q.block_state('bluestone:connect_north') == false && q.block_state('bluestone:connect_west') == false && q.block_state('bluestone:powered') == false",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_se", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_off", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } } }
+      },
+      {
+        "condition": "q.block_state('bluestone:connect_south') == true && q.block_state('bluestone:connect_east') == true && q.block_state('bluestone:connect_north') == false && q.block_state('bluestone:connect_west') == false && q.block_state('bluestone:powered') == true",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_se", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_on", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:map_color": "#6ec8ff", "minecraft:light_emission": 6 }
+      },
+
+      {
+        "condition": "q.block_state('bluestone:connect_south') == true && q.block_state('bluestone:connect_west') == true && q.block_state('bluestone:connect_north') == false && q.block_state('bluestone:connect_east') == false && q.block_state('bluestone:powered') == false",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_sw", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_off", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } } }
+      },
+      {
+        "condition": "q.block_state('bluestone:connect_south') == true && q.block_state('bluestone:connect_west') == true && q.block_state('bluestone:connect_north') == false && q.block_state('bluestone:connect_east') == false && q.block_state('bluestone:powered') == true",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_sw", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_on", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:map_color": "#6ec8ff", "minecraft:light_emission": 6 }
+      },
+
+      {
+        "condition": "q.block_state('bluestone:connect_north') == true && q.block_state('bluestone:connect_south') == true && q.block_state('bluestone:connect_east') == true && q.block_state('bluestone:connect_west') == false && q.block_state('bluestone:powered') == false",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_nse", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_off", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } } }
+      },
+      {
+        "condition": "q.block_state('bluestone:connect_north') == true && q.block_state('bluestone:connect_south') == true && q.block_state('bluestone:connect_east') == true && q.block_state('bluestone:connect_west') == false && q.block_state('bluestone:powered') == true",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_nse", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_on", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:map_color": "#6ec8ff", "minecraft:light_emission": 6 }
+      },
+
+      {
+        "condition": "q.block_state('bluestone:connect_north') == true && q.block_state('bluestone:connect_south') == true && q.block_state('bluestone:connect_west') == true && q.block_state('bluestone:connect_east') == false && q.block_state('bluestone:powered') == false",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_nsw", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_off", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } } }
+      },
+      {
+        "condition": "q.block_state('bluestone:connect_north') == true && q.block_state('bluestone:connect_south') == true && q.block_state('bluestone:connect_west') == true && q.block_state('bluestone:connect_east') == false && q.block_state('bluestone:powered') == true",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_nsw", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_on", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:map_color": "#6ec8ff", "minecraft:light_emission": 6 }
+      },
+
+      {
+        "condition": "q.block_state('bluestone:connect_north') == true && q.block_state('bluestone:connect_east') == true && q.block_state('bluestone:connect_west') == true && q.block_state('bluestone:connect_south') == false && q.block_state('bluestone:powered') == false",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_new", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_off", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } } }
+      },
+      {
+        "condition": "q.block_state('bluestone:connect_north') == true && q.block_state('bluestone:connect_east') == true && q.block_state('bluestone:connect_west') == true && q.block_state('bluestone:connect_south') == false && q.block_state('bluestone:powered') == true",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_new", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_on", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:map_color": "#6ec8ff", "minecraft:light_emission": 6 }
+      },
+
+      {
+        "condition": "q.block_state('bluestone:connect_south') == true && q.block_state('bluestone:connect_east') == true && q.block_state('bluestone:connect_west') == true && q.block_state('bluestone:connect_north') == false && q.block_state('bluestone:powered') == false",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_sew", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_off", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } } }
+      },
+      {
+        "condition": "q.block_state('bluestone:connect_south') == true && q.block_state('bluestone:connect_east') == true && q.block_state('bluestone:connect_west') == true && q.block_state('bluestone:connect_north') == false && q.block_state('bluestone:powered') == true",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_sew", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_on", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:map_color": "#6ec8ff", "minecraft:light_emission": 6 }
+      },
+
+      {
+        "condition": "q.block_state('bluestone:connect_north') == true && q.block_state('bluestone:connect_south') == true && q.block_state('bluestone:connect_east') == true && q.block_state('bluestone:connect_west') == true && q.block_state('bluestone:powered') == false",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_nsew", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_off", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } } }
+      },
+      {
+        "condition": "q.block_state('bluestone:connect_north') == true && q.block_state('bluestone:connect_south') == true && q.block_state('bluestone:connect_east') == true && q.block_state('bluestone:connect_west') == true && q.block_state('bluestone:powered') == true",
+        "components": { "minecraft:geometry": "geometry.bluestone_dust_nsew", "minecraft:material_instances": { "*": { "texture": "bluestone_connector_on", "render_method": "alpha_test", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:map_color": "#6ec8ff", "minecraft:light_emission": 6 }
+      }
+    ]
+  }
+}
+

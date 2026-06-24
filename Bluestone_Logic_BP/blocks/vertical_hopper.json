@@ -4,6 +4,7 @@
     "description": {
       "identifier": "bluestone:vertical_hopper",
       "menu_category": { "category": "items", "group": "itemGroup.name.redstone" },
+      "register_to_creative": true,
       "states": { "bluestone:powered": [false, true] }
     },
     "components": {
