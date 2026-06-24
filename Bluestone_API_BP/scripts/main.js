@@ -13,7 +13,12 @@ const NODE_TYPES = {
   "bluestone:nor_gate": "nor",
   "bluestone:xnor_gate": "xnor",
   "bluestone:diode": "diode",
-  "bluestone:splitter": "splitter"
+  "bluestone:splitter": "splitter",
+  "bluestone:compressor": "sink",
+  "bluestone:extractor": "sink",
+  "bluestone:assembler": "sink",
+  "bluestone:conveyor": "sink",
+  "bluestone:vertical_hopper": "sink"
 };
 
 const REDSTONE_INPUTS = new Set([
@@ -246,6 +251,28 @@ function registerNode(identifier, kind) {
   NODE_TYPES[identifier] = kind;
 }
 
+function processMachines(nodes) {
+  // Process machines (placeholder). Machines must be powered (bluestone:powered) to operate.
+  for (const node of nodes.values()) {
+    try {
+      const type = node.nodeType;
+      const block = node.block;
+      if (type === 'compressor' || type === 'extractor' || type === 'assembler') {
+        const powered = !!(block.permutation && block.permutation.getState && block.permutation.getState('bluestone:powered') === true);
+        if (powered) {
+          // TODO: Implement item processing using block inventory when native container API is available.
+          console.warn(`[Bluestone API] Machine ${type} at ${blockKey(block)} is powered (processing placeholder).`);
+        }
+      }
+    } catch (e) {}
+  }
+}
+
+function handlePipelines(nodes) {
+  // TODO: Implement conveyor/pipe/hopper item transfers in a follow-up.
+  // Will use native block container APIs to move items between adjacent block inventories when powered.
+}
+
 world.afterEvents.scriptEventReceive.subscribe((event) => {
   if (event.id !== "bluestone:register") return;
   const [identifier, kind] = String(event.message ?? "").split(/\s+/);
@@ -254,7 +281,10 @@ world.afterEvents.scriptEventReceive.subscribe((event) => {
 
 system.runInterval(() => {
   try {
-    simulate(collectNodesAroundPlayers());
+    const nodes = collectNodesAroundPlayers();
+    simulate(nodes);
+    try { processMachines(nodes); } catch (e) {}
+    try { handlePipelines(nodes); } catch (e) {}
   } catch (error) {
     console.warn(`[Bluestone API] ${error}`);
   }

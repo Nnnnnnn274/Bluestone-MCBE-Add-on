@@ -1,0 +1,30 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:block": {
+    "description": {
+      "identifier": "bluestone:conveyor",
+      "menu_category": { "category": "items", "group": "itemGroup.name.redstone" },
+      "states": {
+        "bluestone:powered": [false, true],
+        "bluestone:facing": ["north", "south", "east", "west"]
+      }
+    },
+    "components": {
+      "minecraft:display_name": "Bluestone Conveyor",
+      "minecraft:destructible_by_mining": { "seconds_to_destroy": 0.8 },
+      "minecraft:destructible_by_explosion": { "explosion_resistance": 1 },
+      "minecraft:map_color": "#1d65ff",
+      "minecraft:light_dampening": 0,
+      "minecraft:material_instances": { "*": { "render_method": "opaque", "texture": "bluestone_splitter_off" } }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('bluestone:powered') == true",
+        "components": {
+          "minecraft:material_instances": { "*": { "render_method": "opaque", "texture": "bluestone_splitter_on" } },
+          "minecraft:map_color": "#6ec8ff"
+        }
+      }
+    ]
+  }
+}
