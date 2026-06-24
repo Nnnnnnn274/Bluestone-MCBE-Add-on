@@ -1,4 +1,4 @@
-{
+﻿{
     "format_version":  [
                            1,
                            1,
@@ -55,33 +55,33 @@
     "bluestone:splitter":  {
                                "textures":  "bluestone_splitter_off",
                                "sound":  "stone"
-                          },
-    "bluestone:compressor": {
-                              "textures": "bluestone_lamp_off",
-                              "sound": "stone"
-                          },
-    "bluestone:extractor": {
-                              "textures": "bluestone_lamp_off",
-                              "sound": "stone"
-                          },
-    "bluestone:assembler": {
-                              "textures": "bluestone_lamp_off",
-                              "sound": "stone"
-                          },
-    "bluestone:ore": {
-                              "textures": "bluestone_dust_off",
-                              "sound": "stone"
-                          },
-    "bluestone:conveyor": {
-                              "textures": "bluestone_splitter_off",
-                              "sound": "stone"
-                          },
-    "bluestone:vertical_hopper": {
-                              "textures": "bluestone_dust_off",
-                              "sound": "stone"
-                          },
-    "bluestone:compact_block": {
-                              "textures": "bluestone_lamp_off",
-                              "sound": "stone"
-                          }
+                           },
+    "bluestone:compressor":  {
+                                 "textures":  "bluestone_compressor",
+                                 "sound":  "stone"
+                             },
+    "bluestone:extractor":  {
+                                "textures":  "bluestone_extractor",
+                                "sound":  "stone"
+                            },
+    "bluestone:assembler":  {
+                                "textures":  "bluestone_assembler",
+                                "sound":  "stone"
+                            },
+    "bluestone:ore":  {
+                          "textures":  "bluestone_dust_off",
+                          "sound":  "stone"
+                      },
+    "bluestone:conveyor":  {
+                               "textures":  "bluestone_conveyor",
+                               "sound":  "stone"
+                           },
+    "bluestone:vertical_hopper":  {
+                                      "textures":  "bluestone_vertical_hopper",
+                                      "sound":  "stone"
+                                  },
+    "bluestone:compact_block":  {
+                                    "textures":  "bluestone_compact_block",
+                                    "sound":  "stone"
+                                }
 }

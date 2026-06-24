@@ -1,4 +1,4 @@
-{
+﻿{
   "format_version": "1.21.0",
   "minecraft:block": {
     "description": {
@@ -11,7 +11,7 @@
       "minecraft:destructible_by_mining": { "seconds_to_destroy": 2.0 },
       "minecraft:destructible_by_explosion": { "explosion_resistance": 15 },
       "minecraft:map_color": "#1d65ff",
-      "minecraft:material_instances": { "*": { "render_method": "opaque", "texture": "bluestone_lamp_off" } }
+      "minecraft:material_instances": { "*": { "render_method": "opaque", "texture": "bluestone_compact_block" } }
     }
   }
 }
