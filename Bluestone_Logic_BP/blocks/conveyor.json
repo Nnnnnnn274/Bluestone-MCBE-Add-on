@@ -10,7 +10,7 @@
       }
     },
     "components": {
-      "minecraft:display_name": "Bluestone Conveyor",
+      "minecraft:display_name": { "value": "Bluestone Conveyor" },
       "minecraft:container": { "size": 27 },
       "minecraft:destructible_by_mining": { "seconds_to_destroy": 0.8 },
       "minecraft:destructible_by_explosion": { "explosion_resistance": 1 },

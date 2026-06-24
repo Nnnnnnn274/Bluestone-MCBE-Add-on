@@ -7,7 +7,7 @@
       "states": { "bluestone:powered": [false, true] }
     },
     "components": {
-      "minecraft:display_name": "Bluestone Vertical Hopper",
+      "minecraft:display_name": { "value": "Bluestone Vertical Hopper" },
       "minecraft:container": { "size": 27 },
       "minecraft:destructible_by_mining": { "seconds_to_destroy": 1.0 },
       "minecraft:destructible_by_explosion": { "explosion_resistance": 1 },
