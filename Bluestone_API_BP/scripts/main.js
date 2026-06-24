@@ -252,16 +252,179 @@ function registerNode(identifier, kind) {
 }
 
 function processMachines(nodes) {
-  // Process machines (placeholder). Machines must be powered (bluestone:powered) to operate.
+  // Helpers for native container operations
+  function getContainerFromBlock(block) {
+    try {
+      if (!block || !block.getComponent) return null;
+      const comp = block.getComponent("minecraft:container") || block.getComponent("minecraft:inventory") || block.getComponent("container");
+      if (!comp) return null;
+      return comp.container ?? comp;
+    } catch { return null; }
+  }
+
+  function normalizeStack(raw) {
+    if (!raw) return null;
+    let id = raw?.id ?? raw?.item ?? raw?.typeId ?? raw?.__identifier ?? null;
+    let count = raw?.count ?? raw?.amount ?? raw?.quantity ?? raw?.stackSize ?? 0;
+    if (typeof count !== 'number') count = Number(count) || 0;
+    if (typeof id === 'object') id = id?.id ?? id?.typeId ?? String(id);
+    if (!id) return null;
+    return { id: String(id), count };
+  }
+
+  function containerGet(container, slot) {
+    try {
+      if (!container) return null;
+      if (typeof container.getItem === 'function') return normalizeStack(container.getItem(slot));
+      if (typeof container.getItemStack === 'function') return normalizeStack(container.getItemStack(slot));
+      if (typeof container.get === 'function') return normalizeStack(container.get(slot));
+      return null;
+    } catch { return null; }
+  }
+
+  function containerSet(container, slot, id, count) {
+    try {
+      if (!container) return false;
+      const attempts = [ { item: id, count }, { id: id, count }, { typeId: id, amount: count } ];
+      for (const it of attempts) {
+        try {
+          if (typeof container.setItem === 'function') { container.setItem(slot, it); return true; }
+          if (typeof container.setItemStack === 'function') { container.setItemStack(slot, it); return true; }
+          if (typeof container.set === 'function') { container.set(slot, it); return true; }
+        } catch (e) {}
+      }
+      // try clearing slot
+      try {
+        if (typeof container.setItem === 'function') { container.setItem(slot, null); return true; }
+        if (typeof container.set === 'function') { container.set(slot, null); return true; }
+      } catch (e) {}
+      return false;
+    } catch { return false; }
+  }
+
+  function containerCountItem(container, id, size) {
+    let total = 0;
+    for (let s = 0; s < size; s++) {
+      const st = containerGet(container, s);
+      if (st && st.id === id) total += st.count;
+    }
+    return total;
+  }
+
+  function containerAvailableSpaceFor(container, id, size) {
+    const maxStack = 64;
+    let space = 0;
+    for (let s = 0; s < size; s++) {
+      const st = containerGet(container, s);
+      if (!st) space += maxStack;
+      else if (st.id === id) space += Math.max(0, maxStack - st.count);
+    }
+    return space;
+  }
+
+  function containerAdd(container, id, amount, size) {
+    let remaining = amount;
+    const maxStack = 64;
+    // merge into existing
+    for (let s = 0; s < size && remaining > 0; s++) {
+      const st = containerGet(container, s);
+      if (st && st.id === id && st.count < maxStack) {
+        const take = Math.min(maxStack - st.count, remaining);
+        containerSet(container, s, id, st.count + take);
+        remaining -= take;
+      }
+    }
+    // fill empty
+    for (let s = 0; s < size && remaining > 0; s++) {
+      const st = containerGet(container, s);
+      if (!st || st.count <= 0) {
+        const put = Math.min(maxStack, remaining);
+        containerSet(container, s, id, put);
+        remaining -= put;
+      }
+    }
+    return remaining;
+  }
+
+  function containerConsume(container, id, amount, size) {
+    let remaining = amount;
+    for (let s = 0; s < size && remaining > 0; s++) {
+      const st = containerGet(container, s);
+      if (st && st.id === id && st.count > 0) {
+        const take = Math.min(st.count, remaining);
+        containerSet(container, s, id, st.count - take);
+        remaining -= take;
+      }
+    }
+    return remaining === 0;
+  }
+
+  // Machine recipes
+  const ASSEMBLER_RECIPES = [
+    { result: 'bluestone:and_gate', count: 1, ingredients: ['minecraft:redstone','minecraft:redstone','minecraft:stone'] },
+    { result: 'bluestone:or_gate', count: 1, ingredients: ['minecraft:redstone','minecraft:redstone','minecraft:stick'] },
+    { result: 'bluestone:not_gate', count: 1, ingredients: ['minecraft:redstone','minecraft:stone'] },
+    { result: 'bluestone:xor_gate', count: 1, ingredients: ['minecraft:redstone','minecraft:stone','minecraft:stick'] },
+    { result: 'bluestone:nand_gate', count: 1, ingredients: ['minecraft:redstone','minecraft:stone','minecraft:iron_ingot'] },
+    { result: 'bluestone:nor_gate', count: 1, ingredients: ['minecraft:redstone','minecraft:stone','minecraft:gold_ingot'] },
+    { result: 'bluestone:xnor_gate', count: 1, ingredients: ['minecraft:redstone','minecraft:stone','minecraft:diamond'] },
+    { result: 'bluestone:diode', count: 1, ingredients: ['minecraft:redstone','minecraft:stone'] },
+    { result: 'bluestone:splitter', count: 1, ingredients: ['minecraft:redstone','minecraft:stone','minecraft:stick'] },
+    { result: 'bluestone:redstone_connector', count: 1, ingredients: ['minecraft:redstone','minecraft:stone','minecraft:stick'] },
+    { result: 'bluestone:bluestone_torch', count: 1, ingredients: ['bluestone:dust','minecraft:stick'] },
+    { result: 'bluestone:lamp', count: 1, ingredients: ['bluestone:dust','minecraft:glowstone'] }
+  ];
+
+  const COMPRESSOR_RECIPE = { result: 'bluestone:compact_block', count: 1, ingredients: ['bluestone:dust','bluestone:dust','bluestone:dust','bluestone:dust'] };
+  const EXTRACTOR_RECIPE = { result: 'bluestone:dust', count: 4, ingredients: ['bluestone:compact_block'] };
+
+  const MACHINE_RECIPES = { assembler: ASSEMBLER_RECIPES, compressor: [COMPRESSOR_RECIPE], extractor: [EXTRACTOR_RECIPE] };
+  const CONTAINER_SIZES = { 'bluestone:compressor': 9, 'bluestone:extractor': 9, 'bluestone:assembler': 9, 'bluestone:conveyor': 27, 'bluestone:vertical_hopper': 27 };
+
+  function matchRecipe(container, recipe, size) {
+    const required = {};
+    for (const ing of recipe.ingredients) required[ing] = (required[ing] ?? 0) + 1;
+    for (const key of Object.keys(required)) {
+      const have = containerCountItem(container, key, size);
+      if (have < required[key]) return false;
+    }
+    const space = containerAvailableSpaceFor(container, recipe.result, size);
+    if (space < recipe.count) return false;
+    return true;
+  }
+
   for (const node of nodes.values()) {
     try {
-      const type = node.nodeType;
       const block = node.block;
-      if (type === 'compressor' || type === 'extractor' || type === 'assembler') {
-        const powered = !!(block.permutation && block.permutation.getState && block.permutation.getState('bluestone:powered') === true);
-        if (powered) {
-          // TODO: Implement item processing using block inventory when native container API is available.
-          console.warn(`[Bluestone API] Machine ${type} at ${blockKey(block)} is powered (processing placeholder).`);
+      const id = block?.typeId ?? (block?.type?.id ?? '');
+      const machineKey = id.replace('bluestone:', '');
+      if (!MACHINE_RECIPES[machineKey]) continue;
+      const powered = !!(block.permutation && block.permutation.getState && block.permutation.getState('bluestone:powered') === true);
+      if (!powered) continue;
+      const cont = getContainerFromBlock(block);
+      const size = CONTAINER_SIZES[id] ?? 9;
+      if (!cont) continue;
+      const recipes = MACHINE_RECIPES[machineKey];
+      for (const recipe of recipes) {
+        if (matchRecipe(cont, recipe, size)) {
+          // consume ingredients
+          const consumed = containerConsume(cont, recipe.ingredients[0], 0, size); // noop to ensure functions defined
+          // perform consumption properly
+          const required = {};
+          for (const ing of recipe.ingredients) required[ing] = (required[ing] ?? 0) + 1;
+          let failed = false;
+          for (const key of Object.keys(required)) {
+            const ok = containerConsume(cont, key, required[key], size);
+            if (!ok) { failed = true; break; }
+          }
+          if (failed) continue;
+          // add result
+          const remaining = containerAdd(cont, recipe.result, recipe.count, size);
+          if (remaining > 0) {
+            // could not place all output; drop remainder via command
+            try { block.dimension.runCommand(`give @a ${recipe.result} ${remaining}`); } catch (e) {}
+          }
+          break; // one craft per tick per machine
         }
       }
     } catch (e) {}
@@ -269,8 +432,87 @@ function processMachines(nodes) {
 }
 
 function handlePipelines(nodes) {
-  // TODO: Implement conveyor/pipe/hopper item transfers in a follow-up.
-  // Will use native block container APIs to move items between adjacent block inventories when powered.
+  function getContainerFromBlock(block) {
+    try {
+      if (!block || !block.getComponent) return null;
+      const comp = block.getComponent("minecraft:container") || block.getComponent("minecraft:inventory") || block.getComponent("container");
+      if (!comp) return null;
+      return comp.container ?? comp;
+    } catch { return null; }
+  }
+
+  const facingOffsets = { north: { x: 0, z: -1 }, south: { x: 0, z: 1 }, east: { x: 1, z: 0 }, west: { x: -1, z: 0 } };
+  for (const node of nodes.values()) {
+    try {
+      const block = node.block;
+      const id = block?.typeId ?? '';
+      if (id === 'bluestone:conveyor') {
+        try {
+          const powered = !!(block.permutation && block.permutation.getState && block.permutation.getState('bluestone:powered') === true);
+          if (!powered) continue;
+          const facing = (block.permutation && block.permutation.getState) ? block.permutation.getState('bluestone:facing') : 'north';
+          const off = facingOffsets[facing] ?? facingOffsets.north;
+          const srcCont = getContainerFromBlock(block);
+          if (!srcCont) continue;
+          const srcSize = CONTAINER_SIZES[id] ?? 27;
+          const destPos = { x: Math.floor(block.location.x) + off.x, y: Math.floor(block.location.y), z: Math.floor(block.location.z) + off.z };
+          const destBlock = block.dimension.getBlock(destPos);
+          const destCont = getContainerFromBlock(destBlock);
+          const destSize = CONTAINER_SIZES[destBlock?.typeId] ?? 27;
+          if (!destCont) continue;
+          // move first non-empty slot
+          for (let s = 0; s < srcSize; s++) {
+            const st = containerGet(srcCont, s);
+            if (st && st.count > 0) {
+              const moved = st.count;
+              const remainingAfter = containerAdd(destCont, st.id, moved, destSize);
+              const actuallyMoved = moved - remainingAfter;
+              if (actuallyMoved > 0) containerConsume(srcCont, st.id, actuallyMoved, srcSize);
+              break;
+            }
+          }
+        } catch (e) {}
+      } else if (id === 'bluestone:vertical_hopper') {
+        try {
+          const powered = !!(block.permutation && block.permutation.getState && block.permutation.getState('bluestone:powered') === true);
+          if (!powered) continue;
+          const myCont = getContainerFromBlock(block);
+          if (!myCont) continue;
+          const mySize = CONTAINER_SIZES[id] ?? 27;
+          const aboveBlock = block.dimension.getBlock({ x: Math.floor(block.location.x), y: Math.floor(block.location.y) + 1, z: Math.floor(block.location.z) });
+          const aboveCont = getContainerFromBlock(aboveBlock);
+          const aboveSize = CONTAINER_SIZES[aboveBlock?.typeId] ?? 27;
+          if (aboveCont) {
+            for (let s = 0; s < aboveSize; s++) {
+              const st = containerGet(aboveCont, s);
+              if (st && st.count > 0) {
+                const moved = st.count;
+                const remainingAfter = containerAdd(myCont, st.id, moved, mySize);
+                const actuallyMoved = moved - remainingAfter;
+                if (actuallyMoved > 0) containerConsume(aboveCont, st.id, actuallyMoved, aboveSize);
+                break;
+              }
+            }
+          }
+          const belowBlock = block.dimension.getBlock({ x: Math.floor(block.location.x), y: Math.floor(block.location.y) - 1, z: Math.floor(block.location.z) });
+          const belowCont = getContainerFromBlock(belowBlock);
+          const belowSize = CONTAINER_SIZES[belowBlock?.typeId] ?? 27;
+          if (belowCont) {
+            for (let s = 0; s < mySize; s++) {
+              const st = containerGet(myCont, s);
+              if (st && st.count > 0) {
+                const moved = st.count;
+                const remainingAfter = containerAdd(belowCont, st.id, moved, belowSize);
+                const actuallyMoved = moved - remainingAfter;
+                if (actuallyMoved > 0) containerConsume(myCont, st.id, actuallyMoved, mySize);
+                break;
+              }
+            }
+          }
+        } catch (e) {}
+      }
+    } catch (e) {}
+  }
 }
 
 world.afterEvents.scriptEventReceive.subscribe((event) => {

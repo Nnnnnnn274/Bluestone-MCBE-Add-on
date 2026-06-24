@@ -79,5 +79,9 @@
     "bluestone:vertical_hopper": {
                               "textures": "bluestone_dust_off",
                               "sound": "stone"
+                          },
+    "bluestone:compact_block": {
+                              "textures": "bluestone_lamp_off",
+                              "sound": "stone"
                           }
 }

@@ -8,6 +8,7 @@
     },
     "components": {
       "minecraft:display_name": "Bluestone Vertical Hopper",
+      "minecraft:container": { "size": 27 },
       "minecraft:destructible_by_mining": { "seconds_to_destroy": 1.0 },
       "minecraft:destructible_by_explosion": { "explosion_resistance": 1 },
       "minecraft:map_color": "#1d65ff",
