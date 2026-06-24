@@ -260,4 +260,22 @@ system.runInterval(() => {
   }
 }, 5);
 
+world.afterEvents.blockBreak.subscribe((event) => {
+  try {
+    const block = event.block ?? (event.brokenBlocks && event.brokenBlocks[0]) ?? null;
+    const player = event.player ?? event.entity;
+    if (!block || !player) return;
+    try {
+      const type = block?.typeId ?? (block?.type?.id ? block.type.id : undefined) ?? '';
+      if (type === "bluestone:ore" || type === "bluestone:bluestone_ore") {
+        try {
+          const pname = player.name ?? player.nameTag ?? player.__identifier ?? '';
+          const cmd = `give "${pname}" bluestone:dust 1`;
+          try { block.dimension.runCommand(cmd); } catch (e) { try { world.getDimension("overworld").runCommand(cmd); } catch (e2) {} }
+        } catch (e) {}
+      }
+    } catch (e) {}
+  } catch (e) {}
+});
+
 console.warn("[Bluestone API] Loaded. Register addon nodes with /scriptevent bluestone:register <identifier> <kind>.");

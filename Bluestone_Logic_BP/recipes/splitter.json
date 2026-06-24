@@ -1,0 +1,13 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": { "identifier": "bluestone:splitter" },
+    "tags": ["crafting_table"],
+    "ingredients": [
+      { "item": "minecraft:redstone" },
+      { "item": "minecraft:stone" },
+      { "item": "minecraft:stick" }
+    ],
+    "result": { "item": "bluestone:splitter", "count": 1 }
+  }
+}
