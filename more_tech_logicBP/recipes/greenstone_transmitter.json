@@ -1,0 +1,13 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": { "identifier": "bluestone:greenstone_transmitter" },
+    "tags": ["crafting_table"],
+    "ingredients": [
+      { "item": "bluestone:greenstone_energy_engine" },
+      { "item": "minecraft:iron_ingot" },
+      { "item": "bluestone:dust" }
+    ],
+    "result": { "item": "bluestone:greenstone_transmitter", "count": 1 }
+  }
+}

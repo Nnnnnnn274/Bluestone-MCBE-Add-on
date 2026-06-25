@@ -1,0 +1,35 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:block": {
+    "description": {
+      "identifier": "bluestone:greenstone_transmitter",
+      "menu_category": {
+        "category": "items",
+        "group": "itemGroup.name.redstone"
+      },
+      "register_to_creative": true,
+      "states": {
+        "bluestone:powered": [false, true],
+        "greenstone:powered": [false, true]
+      }
+    },
+    "components": {
+      "minecraft:display_name": { "value": "Greenstone Transmitter" },
+      "minecraft:destructible_by_mining": { "seconds_to_destroy": 1.0 },
+      "minecraft:destructible_by_explosion": { "explosion_resistance": 1 },
+      "minecraft:map_color": "#2a8c2a",
+      "minecraft:light_dampening": 0,
+      "minecraft:material_instances": { "*": { "render_method": "opaque", "texture": "greenstone_transmitter_off" } }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('greenstone:powered') == true",
+        "components": {
+          "minecraft:material_instances": { "*": { "render_method": "opaque", "texture": "greenstone_transmitter_on" } },
+          "minecraft:map_color": "#7dff7d",
+          "minecraft:light_emission": 7
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+    "resource_pack_name": "More Tech RP",
+    "texture_name": "atlas.items",
+    "texture_data": {
+        "linking_tool": {
+            "textures": "textures/items/linking_tool"
+        }
+    }
+}

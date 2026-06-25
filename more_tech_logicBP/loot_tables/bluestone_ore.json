@@ -1,0 +1,17 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "bluestone:dust",
+          "count": {
+            "min": 4,
+            "max": 5
+          }
+        }
+      ]
+    }
+  ]
+}

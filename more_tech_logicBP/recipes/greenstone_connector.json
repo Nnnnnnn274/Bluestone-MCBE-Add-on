@@ -1,0 +1,13 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": { "identifier": "bluestone:greenstone_connector" },
+    "tags": ["crafting_table"],
+    "ingredients": [
+      { "item": "bluestone:redstone_connector" },
+      { "item": "bluestone:dust" },
+      { "item": "minecraft:iron_ingot" }
+    ],
+    "result": { "item": "bluestone:greenstone_connector", "count": 1 }
+  }
+}

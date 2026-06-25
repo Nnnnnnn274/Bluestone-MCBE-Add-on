@@ -1,0 +1,37 @@
+{
+    "format_version":  2,
+    "header":  {
+                   "name":  "Moretech Logic BP",
+                   "description":  "Reusable energy graph, logic, greenstone wireless, and fuel simulation API for Bedrock add-ons.",
+                   "uuid":  "75d79fba-107c-4770-848b-fa82b399a9b1",
+                   "version":  [
+                                   0,
+                                   1,
+                                   1
+                               ],
+                   "min_engine_version":  [
+                                              1,
+                                              21,
+                                              0
+                                          ]
+               },
+    "modules":  [
+                    {
+                        "type":  "script",
+                        "language":  "javascript",
+                        "uuid":  "0fb2e757-5fbb-42d9-baa5-f131ca89cf6d",
+                        "entry":  "scripts/main.js",
+                        "version":  [
+                                        0,
+                                        1,
+                                        1
+                                    ]
+                    }
+                ],
+    "dependencies":  [
+                         {
+                             "module_name":  "@minecraft/server",
+                             "version":  "1.14.0"
+                         }
+                     ]
+}

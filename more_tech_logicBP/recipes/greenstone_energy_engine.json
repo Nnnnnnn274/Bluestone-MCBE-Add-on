@@ -1,0 +1,14 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": { "identifier": "bluestone:greenstone_energy_engine" },
+    "tags": ["crafting_table"],
+    "ingredients": [
+      { "item": "minecraft:coal" },
+      { "item": "minecraft:iron_ingot" },
+      { "item": "minecraft:gold_ingot" },
+      { "item": "bluestone:dust" }
+    ],
+    "result": { "item": "bluestone:greenstone_energy_engine", "count": 1 }
+  }
+}

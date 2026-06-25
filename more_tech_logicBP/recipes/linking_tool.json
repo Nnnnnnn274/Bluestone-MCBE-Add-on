@@ -1,0 +1,13 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": { "identifier": "bluestone:linking_tool" },
+    "tags": ["crafting_table"],
+    "ingredients": [
+      { "item": "minecraft:iron_ingot" },
+      { "item": "bluestone:dust" },
+      { "item": "minecraft:stick" }
+    ],
+    "result": { "item": "bluestone:linking_tool", "count": 1 }
+  }
+}

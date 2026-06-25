@@ -1,0 +1,29 @@
+{
+    "format_version":  2,
+    "header":  {
+                   "name":  "More Tech RP",
+                   "description":  "Textures for the More Tech energy, logic, and greenstone wireless systems.",
+                   "uuid":  "c8f08605-f204-437a-8a83-3dd9a6904df3",
+                   "version":  [
+                                   0,
+                                   1,
+                                   1
+                               ],
+                   "min_engine_version":  [
+                                              1,
+                                              21,
+                                              0
+                                          ]
+               },
+    "modules":  [
+                    {
+                        "type":  "resources",
+                        "uuid":  "6a95ec4a-bc72-47ae-ab4f-7172313bcd13",
+                        "version":  [
+                                        0,
+                                        1,
+                                        1
+                                    ]
+                    }
+                ]
+}
