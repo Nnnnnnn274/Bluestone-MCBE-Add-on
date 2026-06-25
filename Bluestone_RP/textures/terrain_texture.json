@@ -138,6 +138,9 @@
                                                     },
                          "bluestone_diode_off":  {
                                                      "textures":  "textures/blocks/bluestone_diode_off"
-                                                 }
+                                                 },
+                         "bluestone_ore":  {
+                                                "textures":  "textures/blocks/bluestone_ore"
+                                            }
                      }
 }

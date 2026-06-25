@@ -69,7 +69,7 @@
                                 "sound":  "stone"
                             },
     "bluestone:ore":  {
-                          "textures":  "bluestone_dust_off",
+                          "textures":  "bluestone_ore",
                           "sound":  "stone"
                       },
     "bluestone:conveyor":  {
